@@ -17,7 +17,7 @@ jobs:
           echo "Checking required runbooks..."
           test -f runbooks/aws/ec2-failover-runbook.md && echo "EC2 runbook: OK"
           test -f runbooks/aws/rds-backup-restore.md && echo "RDS runbook: OK"
-          test -f runbooks/onprem/dell-avamar-recovery.md && echo "Avamar runbook: OK"
+          test -f runbooks/onprem/VMware-backup-recovery.md && echo "VMware runbook: OK"
 
       - name: Check runbooks have RTO/RPO defined
         run: |
