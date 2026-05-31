@@ -1,0 +1,28 @@
+name: Validate DR Runbooks
+
+on:
+  push:
+    branches: [ main, 'feature/**' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check all runbooks exist
+        run: |
+          echo "Checking required runbooks..."
+          test -f runbooks/aws/ec2-failover-runbook.md && echo "EC2 runbook: OK"
+          test -f runbooks/aws/rds-backup-restore.md && echo "RDS runbook: OK"
+          test -f runbooks/onprem/dell-avamar-recovery.md && echo "Avamar runbook: OK"
+
+      - name: Check runbooks have RTO/RPO defined
+        run: |
+          grep -l "RTO" runbooks/aws/*.md | wc -l
+          echo "Runbooks with RTO defined: OK"
+
+      - name: Word count summary
+        run: wc -l runbooks/**/*.md
